@@ -55,7 +55,7 @@ p { margin: 0; }
   gap: 20px 24px;
   padding: 16px 18px 24px;
 }
-.column { display: grid; align-content: start; gap: 14px; min-inline-size: 0; }
+.column { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 14px; min-inline-size: 0; }
 .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .field, .inline-form { display: grid; gap: 6px; }
 .field-label, .knob-label { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
@@ -150,7 +150,8 @@ input[type="range"] { inline-size: 100%; margin: 0; accent-color: var(--_accent)
   background: var(--_surface);
 }
 .confirm p { flex: 1 1 220px; font-weight: 600; }
-.theme-list { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+/* minmax(0, 1fr) tracks let a long theme name ellipsize instead of widening the column. */
+.theme-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; margin: 0; padding: 0; list-style: none; }
 .theme-row {
   display: flex;
   align-items: center;
