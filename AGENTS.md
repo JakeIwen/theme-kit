@@ -34,7 +34,10 @@ README.md covers the adapter contract, tokens and release flow.
   theme code format are used by every consumer. A breaking change to any of
   them is a major release.
 - `consumers.json` lists each app's repo, package folder, whole-suite command
-  and deploy command. Add an app there when it adopts the editor.
+  and deploy command, plus `deployRecords`: tracked files its deploy rewrites
+  (Fieldwork's live browser-verification record), which the fanout commits
+  after deploying so the next run finds the repo clean. Add an app there when
+  it adopts the editor.
 
 ## Checks
 

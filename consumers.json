@@ -5,7 +5,10 @@
       "repo": "~/dev/jri-employment-search",
       "package": "platform",
       "check": "npm --prefix platform run check",
-      "deploy": "npm --prefix platform run deploy"
+      "deploy": "npm --prefix platform run deploy",
+      "deployRecords": [
+        "platform/docs/browser-verification.json"
+      ]
     },
     {
       "name": "critter",

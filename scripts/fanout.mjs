@@ -52,6 +52,14 @@ function update(consumer) {
   git(repo, "push");
   if (flags.has("--no-deploy")) return;
   run(consumer.deploy, repo);
+  // Some deploys rewrite a tracked record of their live checks; commit it so the next fanout starts clean.
+  const records = consumer.deployRecords ?? [];
+  if (records.length && git(repo, "status", "--porcelain", "--", ...records)) {
+    git(repo, "add", "--", ...records);
+    git(repo, "commit", "-m", `Record live verification for the theme-kit ${kitVersion} release`, "-m",
+      `${consumer.deploy} rewrote ${records.join(", ")} after deploying theme-kit ${after}.`);
+    git(repo, "push");
+  }
 }
 
 const selected = names.length ? consumers.filter(consumer => names.includes(consumer.name)) : consumers;
