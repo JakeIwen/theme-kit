@@ -1,0 +1,18 @@
+{
+  "consumers": [
+    {
+      "name": "fieldwork",
+      "repo": "~/dev/jri-employment-search",
+      "package": "platform",
+      "check": "npm --prefix platform run check",
+      "deploy": "npm --prefix platform run deploy"
+    },
+    {
+      "name": "critter",
+      "repo": "~/dev/critter-generator",
+      "package": ".",
+      "check": "npm run check",
+      "deploy": "npm run deploy"
+    }
+  ]
+}
