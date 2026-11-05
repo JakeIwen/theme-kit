@@ -16,6 +16,13 @@
       "package": ".",
       "check": "npm run check",
       "deploy": "npm run deploy"
+    },
+    {
+      "name": "lionfeather",
+      "repo": "~/dev/lionfeather-dev",
+      "package": ".",
+      "check": "npm test && npm run deploy:check",
+      "deploy": "npm run deploy"
     }
   ]
 }

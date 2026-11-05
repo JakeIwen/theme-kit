@@ -1,6 +1,6 @@
-// The four knobs every themed app derives its oklch colors from. Each app maps
-// them onto its own CSS custom properties (Fieldwork calls hueAccent
-// --hue-focus), so a theme saved in one app means the same thing in another.
+// The four knobs every themed app derives its oklch colors from, through the
+// shared palette.css, so a theme saved in one app means the same thing in
+// another. An app may relabel a knob or change its default.
 import { isFiniteNumber, isRecord } from "./values.js";
 
 export const knobKeys = ["hueNeutral", "hueBrand", "hueAccent", "chroma"] as const;

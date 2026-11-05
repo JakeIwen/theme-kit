@@ -17,8 +17,10 @@ role colors below, so a theme pasted from one app looks the same in another:
 | `hueAccent` | `--hue-accent` | 0–360 |
 | `chroma` | `--chroma` | 0–2, step 0.05 |
 
-An app can rename a property or relabel a knob (Fieldwork maps `hueAccent` to
-`--hue-focus`, labelled "Focus hue"). The copy/paste theme code is JSON:
+An app can relabel a knob (Fieldwork calls `hueAccent` "Focus hue") or change
+its default. It can also rename a knob's property, but `palette.css` reads the
+default properties, so an app that renames one must alias the default to it.
+The copy/paste theme code is JSON:
 
 ```json
 {"theme-kit":1,"name":"Rosewood Slate","knobs":{"hueNeutral":360,"hueBrand":240,"hueAccent":70,"chroma":1.15}}
