@@ -6,3 +6,4 @@ export { ThemeEditorElement } from "./editor/theme-editor.js";
 export { defineThemeEditor, mountThemeEditor, themeEditorTag } from "./editor/mount.js";
 export { createLocalThemeStore, type LocalThemeStoreOptions } from "./editor/local-store.js";
 export { swatchColors } from "./editor/swatch.js";
+export { defaultSwatchTokens, paletteProbeClass, paletteSwatchColors } from "./editor/palette-swatch.js";

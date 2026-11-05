@@ -1,6 +1,7 @@
-// Theme previews in the saved-themes list. Apps derive their colors from the
-// knobs differently, so a swatch shows a generic reading of them: background,
-// surface, brand and accent, at lightness levels that suit the current mode.
+// Generic theme previews in the saved-themes list, for an app that supplies no
+// swatchColors: a reading of the knobs as background, surface, brand and
+// accent at lightness levels that suit the current mode. Apps on the shared
+// palette get faithful previews from paletteSwatchColors instead.
 import type { KnobValues } from "../core/knobs.js";
 
 const light = { background: [0.97, 0.01], surface: [0.9, 0.025], brand: [0.45, 0.09], accent: [0.6, 0.12] } as const;

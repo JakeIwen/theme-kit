@@ -1,0 +1,79 @@
+/* The shared palette: the role colors every themed app derives from the four
+   knobs. An app imports this once, before its own stylesheet, and maps its
+   component tokens onto these roles, so a theme code pasted from one app gives
+   the same colors in another. The formulas are Fieldwork's, the first app
+   whose look Jacob tuned; a change here reaches every app through the fanout.
+
+   The knob values below are the defaults from defaultKnobSpecs (the Sage
+   theme). An app sets its own defaults on :root after importing this file,
+   and the active theme writes the knobs inline on <html>.
+
+   Tokens are declared on :root and again on .theme-probe, an element with its
+   own inline knobs and data-theme that re-evaluates them for a swatch preview
+   (paletteSwatchColors in the editor); tokens inherited from :root would carry
+   the page's knobs instead. */
+:root {
+  --hue-neutral: 125;
+  --hue-brand: 160;
+  --hue-accent: 75;
+  --chroma: 1;
+}
+
+:root, .theme-probe {
+  color-scheme: light;
+  /* Page and surfaces: neutral hue, lightest on cards. */
+  --paper: oklch(0.953 calc(0.011 * var(--chroma)) calc(var(--hue-neutral) - 18));
+  --surface: oklch(0.983 calc(0.008 * var(--chroma)) calc(var(--hue-neutral) - 18));
+  --surface-muted: oklch(0.934 calc(0.016 * var(--chroma)) calc(var(--hue-neutral) - 7));
+  --surface-hover: oklch(0.923 calc(0.021 * var(--chroma)) calc(var(--hue-neutral) - 3));
+  --surface-selected: oklch(0.909 calc(0.03 * var(--chroma)) calc(var(--hue-neutral) + 1));
+  --hero: oklch(0.913 calc(0.024 * var(--chroma)) calc(var(--hue-neutral) - 2));
+  --line: oklch(0.869 calc(0.024 * var(--chroma)) var(--hue-neutral));
+  --control-border: oklch(0.627 calc(0.036 * var(--chroma)) calc(var(--hue-neutral) + 5));
+  /* Text: ink leans to the brand hue, muted to the neutral. */
+  --ink: oklch(0.334 calc(0.028 * var(--chroma)) calc(var(--hue-brand) + 3));
+  --muted: oklch(0.483 calc(0.035 * var(--chroma)) calc(var(--hue-neutral) + 10));
+  /* Brand hue: links, emphasis and the primary action. */
+  --link: oklch(0.437 calc(0.061 * var(--chroma)) var(--hue-brand));
+  --brand: oklch(0.451 calc(0.075 * var(--chroma)) calc(var(--hue-brand) - 12));
+  --primary: oklch(0.43 calc(0.061 * var(--chroma)) calc(var(--hue-brand) - 2));
+  --primary-hover: oklch(0.38 calc(0.06 * var(--chroma)) calc(var(--hue-brand) - 2));
+  --on-primary: oklch(0.972 calc(0.018 * var(--chroma)) calc(var(--hue-neutral) - 15));
+  /* Accent hue: highlights and focus rings. */
+  --accent: oklch(0.527 calc(0.087 * var(--chroma)) calc(var(--hue-accent) - 3));
+  --focus: var(--accent);
+  /* Text selection, modal backdrop and shadows. The light selection is a fixed
+     blue so selected text reads the same under every theme. */
+  --selection: #c4d8eb;
+  --selection-ink: oklch(0.297 calc(0.036 * var(--chroma)) calc(var(--hue-brand) + 24));
+  --backdrop: oklch(0.243 calc(0.026 * var(--chroma)) calc(var(--hue-brand) + 5) / 80%);
+  --panel-shadow: oklch(0.332 calc(0.062 * var(--chroma)) calc(var(--hue-brand) - 17) / 0.8%);
+  --floating-shadow: oklch(0.302 calc(0.046 * var(--chroma)) calc(var(--hue-brand) - 7) / 10%);
+  --dialog-shadow: oklch(0.289 calc(0.03 * var(--chroma)) calc(var(--hue-brand) + 15) / 20%);
+}
+
+:root[data-theme="dark"], .theme-probe[data-theme="dark"] {
+  color-scheme: dark;
+  /* The page sits near gray (the hue offset lands opposite the neutral at a
+     chroma too low to read) and the surfaces above it carry the warmth. */
+  --paper: oklch(0.269 calc(0.006 * var(--chroma)) calc(var(--hue-neutral) + 146));
+  --surface: oklch(0.304 calc(0.008 * var(--chroma)) calc(var(--hue-neutral) + 28));
+  --surface-muted: oklch(0.343 calc(0.018 * var(--chroma)) calc(var(--hue-neutral) + 14));
+  --surface-hover: oklch(0.381 calc(0.027 * var(--chroma)) calc(var(--hue-neutral) + 12));
+  --surface-selected: oklch(0.422 calc(0.034 * var(--chroma)) calc(var(--hue-neutral) + 9));
+  --hero: oklch(0.351 calc(0.023 * var(--chroma)) calc(var(--hue-neutral) + 18));
+  --line: oklch(0.453 calc(0.023 * var(--chroma)) calc(var(--hue-neutral) + 8));
+  --control-border: oklch(0.626 calc(0.036 * var(--chroma)) calc(var(--hue-neutral) + 7));
+  --ink: oklch(0.928 calc(0.014 * var(--chroma)) var(--hue-neutral));
+  --muted: oklch(0.805 calc(0.025 * var(--chroma)) calc(var(--hue-neutral) + 5));
+  --link: oklch(0.832 calc(0.066 * var(--chroma)) calc(var(--hue-brand) - 25));
+  --brand: oklch(0.843 calc(0.069 * var(--chroma)) calc(var(--hue-brand) - 27));
+  /* The primary action is a light fill with dark text in dark mode. */
+  --primary: oklch(0.817 calc(0.051 * var(--chroma)) calc(var(--hue-brand) - 32));
+  --primary-hover: oklch(0.872 calc(0.045 * var(--chroma)) calc(var(--hue-brand) - 32));
+  --on-primary: oklch(0.303 calc(0.031 * var(--chroma)) calc(var(--hue-brand) - 12));
+  --accent: oklch(0.814 calc(0.097 * var(--chroma)) calc(var(--hue-accent) + 6));
+  --selection: oklch(0.8 calc(0.062 * var(--chroma)) calc(var(--hue-brand) - 31));
+  --selection-ink: oklch(0.281 calc(0.029 * var(--chroma)) calc(var(--hue-brand) - 15));
+  --backdrop: oklch(0.188 calc(0.013 * var(--chroma)) calc(var(--hue-brand) - 15) / 80%);
+}

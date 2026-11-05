@@ -13,10 +13,12 @@
     "./core": {
       "types": "./dist/core/index.d.ts",
       "default": "./dist/core/index.js"
-    }
+    },
+    "./palette.css": "./palette.css"
   },
   "files": [
-    "dist"
+    "dist",
+    "palette.css"
   ],
   "sideEffects": false,
   "scripts": {
