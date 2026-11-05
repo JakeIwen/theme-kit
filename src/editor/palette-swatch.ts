@@ -3,7 +3,7 @@
 // a real color property resolves calc() and hue wrapping, so the saved-themes
 // list shows the colors the app would paint. The probe's class is the one
 // palette.css re-declares its tokens on.
-import { applyKnobs, type KnobSpecs, type KnobValues } from "../core/knobs.js";
+import { applyKnobs, defaultKnobSpecs, type KnobSpecs, type KnobValues } from "../core/knobs.js";
 
 export const paletteProbeClass = "theme-probe";
 export const defaultSwatchTokens: readonly string[] = ["--paper", "--surface", "--brand", "--accent"];
@@ -15,7 +15,11 @@ export function paletteSwatchColors(specs: KnobSpecs, tokens: readonly string[] 
     probe.className = paletteProbeClass;
     probe.dataset.theme = darkMode ? "dark" : "light";
     probe.hidden = true;
+    // palette.css reads the default properties. An app that renamed one and
+    // aliases it on :root would otherwise hand the probe the page's resolved
+    // value, so the probe gets the knobs under both names.
     applyKnobs(specs, knobs, probe.style);
+    applyKnobs(defaultKnobSpecs, knobs, probe.style);
     const chips = tokens.map(token => {
       const chip = document.createElement("span");
       chip.style.backgroundColor = `var(${token})`;

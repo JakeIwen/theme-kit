@@ -43,7 +43,7 @@ test("tokens derive only from the four knobs and from roles declared beside them
   }
 });
 
-test("lightness is fixed per token so a theme change keeps its contrast", () => {
+test("every oklch token states a literal lightness, never one derived from a knob", () => {
   for (const block of [light, dark]) {
     for (const [name, value] of block.tokens) {
       const color = value.match(/^oklch\(([^)]*)/)?.[1];

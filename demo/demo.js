@@ -1,4 +1,4 @@
-import { createLocalThemeStore, knobSpecs, mountThemeEditor } from "../dist/index.js";
+import { createLocalThemeStore, knobSpecs, mountThemeEditor, paletteSwatchColors } from "../dist/index.js";
 
 const specs = knobSpecs();
 const builtins = [
@@ -15,5 +15,5 @@ const mode = {
   subscribe(listener) { modeListeners.add(listener); return () => modeListeners.delete(listener); },
 };
 const store = createLocalThemeStore({ specs, builtins, storageKey: "theme-kit-demo" });
-const editor = mountThemeEditor({ builtins, store, mode });
+const editor = mountThemeEditor({ builtins, store, mode, swatchColors: paletteSwatchColors(specs) });
 document.getElementById("open-editor").addEventListener("click", () => editor.toggle());

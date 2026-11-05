@@ -20,7 +20,9 @@
     "dist",
     "palette.css"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "./palette.css"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && node --test \"test/*.test.js\"",

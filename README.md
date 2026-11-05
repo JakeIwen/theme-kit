@@ -19,7 +19,8 @@ role colors below, so a theme pasted from one app looks the same in another:
 
 An app can relabel a knob (Fieldwork calls `hueAccent` "Focus hue") or change
 its default. It can also rename a knob's property, but `palette.css` reads the
-default properties, so an app that renames one must alias the default to it.
+default properties, so an app that renames one must alias the default to it on
+`:root` (the swatch probe gets the knobs under both names on its own).
 The copy/paste theme code is JSON:
 
 ```json
@@ -96,7 +97,7 @@ app's tokens file:
 ```css
 theme-editor {
   --te-bg: var(--surface);          /* pane background */
-  --te-surface: var(--cream);       /* rows, prompts */
+  --te-surface: var(--paper);       /* rows, prompts */
   --te-hover: var(--surface-hover);
   --te-selected: var(--surface-selected);
   --te-field: var(--surface);       /* text inputs */
