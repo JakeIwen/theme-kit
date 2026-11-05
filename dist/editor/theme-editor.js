@@ -415,7 +415,7 @@ export class ThemeEditorElement extends HTMLElement {
             theme,
             active: theme.id === lib.active.id,
             builtin: isBuiltin(lib, theme.id),
-            colors: swatchColors(theme.knobs, dark),
+            colors: this.#adapter?.swatchColors?.(theme.knobs, dark) ?? swatchColors(theme.knobs, dark),
         })), {
             pick: id => this.#pick(id),
             duplicate: id => this.#duplicate(id),

@@ -13,7 +13,7 @@ README.md covers the adapter contract, tokens and release flow.
 | `src/core/theme-code.ts` | The versioned copy/paste theme code |
 | `src/core/editor-state.ts` | Pure draft rules: loaded theme, unsaved changes, name clashes, fallback |
 | `src/core/values.ts` | `isRecord`, `isFiniteNumber` |
-| `src/editor/adapter.ts` | The app contract: `ThemeAdapter`, `ThemeStore`, `ThemeModeControl` |
+| `src/editor/adapter.ts` | The app contract: `ThemeAdapter` (including optional read-only app-derived swatch colors), `ThemeStore`, `ThemeModeControl` |
 | `src/editor/theme-editor.ts` | The `<theme-editor>` element: state, actions, rendering |
 | `src/editor/editor-view.ts` | DOM construction for the pane and the saved-themes list |
 | `src/editor/editor-styles.ts` | The pane's stylesheet and its `--te-*` tokens |

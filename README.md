@@ -82,6 +82,15 @@ theme-editor {
 Unmapped tokens fall back to system colors. Styles load as a constructed
 stylesheet, so a CSP without `'unsafe-inline'` styles still works.
 
+Saved-theme swatches are generic by default: neutral background/surface and
+raw brand/accent hues, not a prediction of an app's derived tokens. Supply
+`swatchColors(knobs, darkMode): string[]` on the adapter for faithful app previews.
+Return representative CSS colors in display order; the callback is read-only,
+synchronous and must be cheap: it runs on every render, including name and
+slider input as well as mode and library changes. Derive colors from the app's
+existing token definitions in an isolated scope, without changing the page's
+active knobs, writing settings or duplicating its color formulas.
+
 ## Developing
 
 `npm test` builds and runs the tests; `npm run check` also confirms the

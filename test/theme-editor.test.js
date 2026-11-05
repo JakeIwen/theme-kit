@@ -34,10 +34,10 @@ function memoryStore(initial) {
   };
 }
 
-function setup(initial = { themes: [], active: { id: "sage", knobs: sage.knobs } }) {
+function setup(initial = { themes: [], active: { id: "sage", knobs: sage.knobs } }, overrides = {}) {
   document.querySelector("theme-editor")?.remove();
   const store = memoryStore(initial);
-  const editor = mountThemeEditor({ builtins: [sage, slate], store, knobs: { hueAccent: { property: "--hue-focus", label: "Focus hue" } } });
+  const editor = mountThemeEditor({ builtins: [sage, slate], store, knobs: { hueAccent: { property: "--hue-focus", label: "Focus hue" } }, ...overrides });
   const root = editor.shadowRoot;
   const $ = selector => root.querySelector(selector);
   const byText = (text, scope = root) => [...scope.querySelectorAll("button")].find(button => button.textContent.trim() === text);
@@ -46,6 +46,48 @@ function setup(initial = { themes: [], active: { id: "sage", knobs: sage.knobs }
   const settle = () => new Promise(resolve => setTimeout(resolve, 0));
   return { editor, store, $, byText, rows, slide, settle };
 }
+
+test("saved-theme swatches use the generic fallback without an app callback", async () => {
+  const { swatchColors } = await import("../dist/editor/swatch.js");
+  const { editor, $, store } = setup();
+  editor.style.colorScheme = "dark";
+  editor.show();
+  const colors = [...$(".swatch").children].map(chip => chip.style.background);
+  const expected = swatchColors(sage.knobs, true).map(color => {
+    const chip = document.createElement("span");
+    chip.style.background = color;
+    return chip.style.background;
+  });
+  assert.deepEqual(colors, expected);
+  assert.deepEqual(store.calls, []);
+});
+
+test("app swatches receive each saved theme and refresh on mode changes without store writes", () => {
+  const calls = [];
+  let mode = "soft", notify;
+  const colors = dark => dark ? ["rgb(10, 20, 30)", "rgb(40, 50, 60)"] : ["rgb(100, 110, 120)"];
+  const { editor, $, store, slide } = setup(undefined, {
+    mode: { options: [], get: () => mode, set: () => {}, subscribe: listener => { notify = listener; return () => {}; } },
+    swatchColors(knobs, dark) { calls.push([structuredClone(knobs), dark]); return colors(dark); },
+  });
+  editor.show();
+  assert.deepEqual(calls.slice(-2), [[sage.knobs, false], [slate.knobs, false]]);
+  assert.deepEqual([...$(".swatch").children].map(chip => chip.style.background), colors(false));
+  mode = "dark";
+  editor.style.colorScheme = "dark";
+  notify();
+  assert.deepEqual(calls.slice(-2), [[sage.knobs, true], [slate.knobs, true]]);
+  assert.deepEqual([...$(".swatch").children].map(chip => chip.style.background), colors(true));
+  assert.deepEqual(store.calls, []);
+  const beforeSlide = calls.length;
+  slide("hueBrand", 20);
+  assert.ok(calls.length > beforeSlide, "slider input renders fresh swatches");
+  assert.deepEqual(calls.slice(-2), [[sage.knobs, true], [slate.knobs, true]], "rows preview saved knobs, not an unsaved draft");
+  assert.deepEqual(store.calls.map(([kind]) => kind), ["preview"]);
+  const rosewood = { id: "rosewood-slate", name: "Rosewood Slate", knobs: { hueNeutral: 360, hueBrand: 240, hueAccent: 70, chroma: 1.15 } };
+  store.saveTheme(rosewood);
+  assert.deepEqual(calls.slice(-3), [[sage.knobs, true], [slate.knobs, true], [rosewood.knobs, true]]);
+});
 
 test("opens on the active theme with built-ins locked and saved themes listed", () => {
   const { editor, $, rows, byText } = setup({ themes: [{ id: "dusk", name: "Dusk", knobs: { ...slate.knobs, hueBrand: 10 } }], active: { id: "sage", knobs: sage.knobs } });

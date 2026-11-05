@@ -36,4 +36,7 @@ export interface ThemeAdapter {
   builtins: readonly Theme[];
   store: ThemeStore;
   mode?: ThemeModeControl;
+  /** App-derived colors for a saved theme in the current light/dark mode.
+   * Read-only: must not activate, preview or persist the theme. Omit for generic swatches. */
+  swatchColors?(knobs: KnobValues, darkMode: boolean): string[];
 }
